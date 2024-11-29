@@ -1,4 +1,3 @@
-![home](https://github.com/user-attachments/assets/36df7bd5-94df-47f3-8eea-c270bfc4d238)# Blog
 
 A platform where users can register, log in, and share their thoughts via tweets. Users can create, edit, delete, and comment on tweets categorized under tags like "Personal," "Business," "Food," "Product," and "Travel." Built with Django.
 
@@ -11,7 +10,9 @@ A platform where users can register, log in, and share their thoughts via tweets
 - **Dashboard**: View and manage tweets.  
 - **Recent Tweets**: Display the latest tweets.
 
-(![home](https://github.com/user-attachments/assets/c7adb147-7d8a-4e8d-adb8-3c2de192c2b3)
+![home](https://github.com/user-attachments/assets/36df7bd5-94df-47f3-8eea-c270bfc4d238)# Blog
+
+
 
 ![tag-food](https://github.com/user-attachments/assets/ce017e28-fd46-4f70-af3c-a28eca5c54ba)
 
