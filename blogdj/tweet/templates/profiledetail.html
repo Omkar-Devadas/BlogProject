@@ -1,0 +1,95 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block title %}
+{{ tweet.title }}'s page
+{% endblock %}
+
+{% block content %}
+<a href="{% url 'profile' %}" class="btn btn-outline-primary mt-4">
+    <i class="bi bi-arrow-left-square-fill fs-4 "></i> 
+</a>
+
+<div class="container mt-5">
+    <!-- Tweet Details Card -->
+    <div class="card shadow-lg" style="max-width: 1000px; margin: 0 auto;" style="border-radius:12px">
+        <div class="card-header bg-light text-white text-center p-4" >
+            
+        </div>
+
+        <div class="card-body mt-3">
+            <!-- Title and Photo Section -->
+            <div class="row align-items-center mb-1">
+                <div class="col-md-6">
+                    <h3 class="card-title text-center" 
+                     style="font-size: 4rem; color: purple; font-family: serif; 
+                     font-weight: 800; font-style: oblique;">
+                        {{ tweet.title }}
+                    </h3>
+                </div>
+                <div class="col-md-5 text-center">
+                    {% if tweet.photo %}
+                        <img src="{{ tweet.photo.url }}" alt="Tweet Photo" class="img-fluid rounded shadow" style="max-height: 400px; object-fit: cover;">
+                    {% else %}
+                        <img src="{% static 'comingsoon.jpg' %}" alt="Default Image" class="img-fluid rounded shadow" style="max-height: 400px; object-fit: cover;">
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Tag Section -->
+            <div class="mb-5">
+                <span class="badge fs-5" style="background-color: #f7f757; color: black;">{{ tweet.add_Tag }}</span>
+            </div>
+
+            <!-- Blog Content -->
+            <div class="mt-4">
+                <p class="card-text text-justify" style="font-size: 1.2rem;">{{ tweet.about_blog|linebreaks }}</p>
+            </div>
+
+            <!-- Created Date -->
+            <div class="mt-4 text-end">
+                <small class="text-muted p-5">Created by: {{ tweet.user.username }}</small> <br>
+                <small class="text-muted">Created on: {{ tweet.created_at }}</small>
+            </div>
+
+            <!-- Edit/Delete Buttons for Tweet Owner -->
+            {% if tweet.user == user %}
+                <div class="d-flex justify-content-between mt-4">
+                    <a href="{% url 'tweet_edit' tweet.id %}" class="btn btn-primary">Edit</a>
+                    <a href="{% url 'tweet_delete' tweet.id %}" class="btn btn-danger">Delete</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Comments Section -->
+<div class="container mt-5">
+    <div class="row">
+        <!-- Display Comments -->
+        <div class="col-md-7 mt-3">
+            
+            <h4 class="text-secondary ms-1">All Comments</h4>
+            {% if allthecomments %}
+                <ul class="list-group list-group-flush mt-2 p-2" style="border-radius:15px;">
+                    {% for comment in allthecomments %}
+                    <li class="list-group-item bg-light" style="border-radius:15px">
+                        {% comment %} <h5 style="color:black">{{ comment.user_name }}</h5> {% endcomment %}
+                        <h5 style="color:black">
+                            <a href="mailto:{{ comment.user_email }}" style="color:black; text-decoration:none;">
+                                {{ comment.user_name }}
+                            </a>
+                        </h5>
+                        
+                        <h6 class="mx-4" style="color:#3C3D37">{{ comment.text }}</h6>
+                    </li><br>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="text-muted">No comments yet. </p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

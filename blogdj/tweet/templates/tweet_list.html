@@ -1,0 +1,90 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block title %}
+All Posts
+{% endblock %}
+
+
+{% block css_files %}
+<link rel="stylesheet" href="{% static 'css/tweet.css' %}">
+
+{% endblock  %}
+
+
+
+{% block content %}
+{% comment %} <h1 class="text-center mt-4 display-3 text-primary font-weight-bold" style="font-family: 'Roboto Slab', serif; text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);">
+    WELCOME TO BLOG
+</h1> {% endcomment %}
+
+<!-- Create New Tweet Button -->
+<!-- Create New Tweet Button -->
+<a class="btn btn-primary mx-3 mt-5 mb-2 my-2" href="{% url 'tweet_create' %}">Create a New Tweet</a>
+
+<!-- Filter by Tag -->
+<nav class="navbar navbar-light mt-3" style="background-color:#E0FFFF; margin-left: 15px; margin-right: 15px;">
+    <form class="form-inline d-flex w-100 justify-content-between" method="GET" action="{% url 'tweet_list' %}" style="margin: 0; padding: 0;">
+        <span class="btn btn-outline-secondary disabled" role="button" style="margin-right: 5px;">Explore topics</span>
+
+        <button class="btn btn-sm btn-outline-secondary {% if not selected_tag %}active{% endif %}" type="submit" name="tag" value="" style="margin: 0 0.5px; padding: 4px 8px;">All</button>
+        <button class="btn btn-sm btn-outline-secondary {% if selected_tag == 'Food' %}active{% endif %}" type="submit" name="tag" value="Food" style="margin: 0 0.5px; padding: 4px 8px;">Food</button>
+        <button class="btn btn-sm btn-outline-secondary {% if selected_tag == 'Personal' %}active{% endif %}" type="submit" name="tag" value="Personal" style="margin: 0 0.5px; padding: 4px 8px;">Personal</button>
+        <button class="btn btn-sm btn-outline-secondary {% if selected_tag == 'Business' %}active{% endif %}" type="submit" name="tag" value="Business" style="margin: 0 0.5px; padding: 4px 8px;">Buiseness</button>
+        <button class="btn btn-sm btn-outline-secondary {% if selected_tag == 'Travel' %}active{% endif %}" type="submit" name="tag" value="Travel" style="margin: 0 0.5px; padding: 4px 8px;">Travel</button>
+        <button class="btn btn-sm btn-outline-secondary {% if selected_tag == 'Product' %}active{% endif %}" type="submit" name="tag" value="Product" style="margin: 0 0.5px; padding: 4px 8px;">Product</button>
+    </form>
+</nav>
+
+
+
+
+<br>
+
+<!-- Display Tweets -->
+<div class="container">
+    <div class="row row-cols-1 row-cols-md-3 g-5 mb-4">
+        {% if alltweets %}
+            {% for tweet in alltweets %}
+                <div class="col">
+                    <a href="{% url 'tweet_detail' tweet.pk %}" class="text-decoration-none">
+                        <div class="card hover-transform">
+                            {% if tweet.photo %}
+                                <img src="{{ tweet.photo.url }}" class="card-img-top" alt="Tweet Image" style="width: 100%; height: 300px; object-fit: cover;">
+                            {% else %}
+                                <img src="{% static 'comingsoon.jpg' %}" class="card-img-top" alt="Default Image" style="width: 100%; height: 300px; object-fit: cover;">
+                            {% endif %}
+                            <div class="card-body p-2">
+                                <h3 class="card-title fw-bold" style="color: purple; font-size: 1.2rem; margin-bottom: 0.5rem;">
+                                    {{ tweet.title }}
+                                </h3>
+                                <p class="card-subtitle text-secondary mb-1">
+                                    Posted by <span style="color: black"><b>{{ tweet.user.username }}</b></span>
+                                </p>
+                                <p class="badge text-dark mb-2" style="background-color: #f7f757">
+                                    {{ tweet.add_tag }}
+                                </p>
+    
+                                <!-- Using flexbox to align the date to the right -->
+                                <p class="card-subtitle text-secondary d-flex justify-content-end" style="font-size: 0.9rem;">
+                                    on {{ tweet.created_at|date:"F j, Y" }}
+                                </p>
+    
+                                {% if tweet.user == user %}
+                                    <div class="mt-2">
+                                        <a href="{% url 'tweet_edit' tweet.id %}" class="btn btn-primary btn-sm mx-1">Edit</a>
+                                        <a href="{% url 'tweet_delete' tweet.id %}" class="btn btn-danger btn-sm mx-2">Delete</a>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        {% else %}
+        <p class="text-center text-muted" style="white-space: nowrap;">No posts available under this tag. Be the first to add a blog with this tag!</p>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

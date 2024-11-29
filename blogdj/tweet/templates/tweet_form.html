@@ -1,0 +1,86 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block title %}
+Index-page
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center text-black mb-4">Add Your Content</h1>
+    <a href="{% url 'tweet_list' %}" class="btn btn-primary mb-3">Back to All Tweets</a>
+
+    <h2 class="text-center">
+        {% if form.instance.pk %}
+            Edit Tweet
+        {% else %}
+            Create Tweet
+        {% endif %}
+    </h2>
+
+    <!-- Form Section -->
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-lg p-4 rounded bg-light">
+                
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                
+                    <!-- Title Input -->
+                    <div class="mb-3">
+                        <label for="{{ form.title.id_for_label }}" class="form-label"><b>Blog's Title</b></label>
+                        <input type="text" name="{{ form.title.html_name }}" id="{{ form.title.id_for_label }}"
+                               value="{{ form.title.value }}" class="form-control {% if form.title.errors %}is-invalid{% endif %}">
+                        {% for error in form.title.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                
+                    <!-- Blog Content Description -->
+                    <div class="mb-3">
+                        <label for="{{ form.about_blog.id_for_label }}" class="form-label"><b>Describe your blog content</b></label>
+                        <textarea name="{{ form.about_blog.html_name }}" id="{{ form.about_blog.id_for_label }}"
+                                  class="form-control {% if form.about_blog.errors %}is-invalid{% endif %}">{{ form.about_blog.value }}</textarea>
+                        {% for error in form.about_blog.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                
+                    <!-- Photo Input -->
+                    <div class="mb-3">
+                        <label for="{{ form.photo.id_for_label }}" class="form-label"><b> Add Photo </b></label>
+                        <input type="file" name="{{ form.photo.html_name }}" id="{{ form.photo.id_for_label }}" class="form-control {% if form.photo.errors %}is-invalid{% endif %}">
+                        {% for error in form.photo.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                
+                    <!-- Tag Selection -->
+                    <div class="mb-3">
+                        <label for="{{ form.add_tag.id_for_label }}" class="form-label"><b>Add Tag</b></label>
+                        <select name="{{ form.add_tag.html_name }}" id="{{ form.add_tag.id_for_label }}" class="form-select {% if form.add_tag.errors %}is-invalid{% endif %}">
+                            {% for option in form.add_tag.field.choices %}
+                                <option value="{{ option.0 }}" {% if option.0 == form.add_tag.value %}selected{% endif %}>
+                                    {{ option.1 }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                        {% for error in form.add_tag.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                
+                    <!-- Submit/Update Button -->
+                    <button class="btn btn-warning" type="submit">
+                        {% if form.instance.pk %}
+                            Update Tweet
+                        {% else %}
+                            Submit Tweet
+                        {% endif %}
+                    </button>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

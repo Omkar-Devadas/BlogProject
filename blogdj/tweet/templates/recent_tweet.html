@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block title %}
+Recent-posts 
+{% endblock %}
+
+{% block css_files %}
+<link rel="stylesheet" href="{% static 'css/tweet.css' %}">
+
+{% endblock  %}
+
+
+{% block content %}
+<h1 class="text-center mt-4 display-3 text-primary font-weight-bold" style="font-family: 'Roboto Slab', serif; text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);">
+    WELCOME TO BLOG
+</h1>
+
+<a class="btn btn-primary mx-3 mt-3 mb-1" href="{% url 'tweet_create' %}">Create a New Tweet</a>
+
+<div class="container">
+    <!-- Reduced gap with g-2 and removed additional margins -->
+    <div class="row row-cols-1 row-cols-md-3 g-5 mb-4 mt-1">
+        {% for tweet in alltweets %}
+        <div class="col">
+            <a href="{% url 'tweet_detail' tweet.pk %}" class="text-decoration-none">
+                <div class="card hover-transform">
+                    {% if tweet.photo %}
+                        <img src="{{ tweet.photo.url }}" class="card-img-top" alt="Tweet Image" style="width: 100%; height: 300px; object-fit: cover;">
+                    {% else %}
+                        <img src="{% static 'comingsoon.jpg' %}" class="card-img-top" alt="Default Image" style="width: 100%; height: 300px; object-fit: cover;">
+                    {% endif %}
+                    <div class="card-body p-2">
+                        <h3 class="card-title fw-bold" style="color: purple; font-size: 1.2rem; margin-bottom: 0.5rem;">{{ tweet.title }}</h3>
+                        <p class="card-subtitle text-secondary mb-1">
+                            Posted by <span style="color: black"><b>{{ tweet.user.username }}</b></span>
+                        </p>
+                        <p class="badge  text-dark mb-2" style="background-color: #f7f757">{{ tweet.add_tag }}</p>
+        
+                        <!-- Using flexbox to align the date to the right -->
+                        <p class="card-subtitle text-secondary d-flex justify-content-end" style="font-size: 0.9rem;">
+                            on {{ tweet.created_at|date:"F j, Y" }}
+                        </p>
+        
+                        {% if tweet.user == user %}
+                            <div class="mt-2">
+                                <a href="{% url 'tweet_edit' tweet.id %}" class="btn btn-primary btn-sm mx-1">Edit</a>
+                                <a href="{% url 'tweet_delete' tweet.id %}" class="btn btn-danger btn-sm mx-2">Delete</a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </a>
+        </div>        
+        
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
