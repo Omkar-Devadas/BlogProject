@@ -22,8 +22,8 @@ A platform where users can register, log in, and share their thoughts via tweets
 
 
 **PROFILE PAGE**
+![profile](https://github.com/user-attachments/assets/10d87667-a201-4ae5-833d-6d7c85a7c765)
 
-[profile](https://github.com/user-attachments/assets/f0fa6842-6fdd-43d7-a841-846ed0db9f53)
 
 
 **POST_DETAIL PAGE**
