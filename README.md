@@ -10,13 +10,23 @@ A platform where users can register, log in, and share their thoughts via tweets
 - **Dashboard**: View and manage tweets.  
 - **Recent Tweets**: Display the latest tweets.
 
+
+
+**HOME PAGE**
 ![home](https://github.com/user-attachments/assets/36df7bd5-94df-47f3-8eea-c270bfc4d238)# Blog
 
 
+**PAGE BY TAGS**
 
 ![tag-food](https://github.com/user-attachments/assets/ce017e28-fd46-4f70-af3c-a28eca5c54ba)
 
+
+**PROFILE PAGE**
+
 [profile](https://github.com/user-attachments/assets/f0fa6842-6fdd-43d7-a841-846ed0db9f53)
+
+
+**POST_DETAIL PAGE**
 
 ![post-detail](https://github.com/user-attachments/assets/3d5857f6-628a-4933-9d9f-d1a3b1164986)
 
